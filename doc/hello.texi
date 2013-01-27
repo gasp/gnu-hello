@@ -1,125 +1,172 @@
 \input texinfo @c -*-texinfo-*-
 @c %**start of header
 @setfilename hello.info
-@settitle Printing a Greeting
-@finalout
-@setchapternewpage odd
+@include version.texi
+@settitle GNU Hello @value{VERSION}
 @c %**end of header
 
-@include version.texi
-
 @copying
-This file documents the GNU @code{hello} command for printing a
-greeting message.
+This manual is for GNU Hello (version @value{VERSION}, @value{UPDATED}),
+which prints a friendly greeting (and serves as an example GNU package).
 
-Copyright (C) 1992, 1993, 1996, 2002 Free Software Foundation, Inc.
+Copyright @copyright{} 1992, 1993, 1996, 2002, 2005, 2006 Free
+Software Foundation, Inc.
 
-Permission is granted to make and distribute verbatim copies of
-this manual provided the copyright notice and this permission notice
-are preserved on all copies.
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover Texts being ``A GNU Manual,''
+and with the Back-Cover Texts as in (a) below.  A copy of the license
+is included in the section entitled ``GNU Free Documentation
+License.''
 
-@ignore
-Permission is granted to process this file through TeX and print the
-results, provided the printed document carries copying permission
-notice identical to this one except for the removal of this paragraph
-(this paragraph not being relevant to the printed manual).
-@end ignore
-
-Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided that the entire
-resulting derived work is distributed under the terms of a permission
-notice identical to this one.
-
-Permission is granted to copy and distribute translations of this manual
-into another language, under the above conditions for modified versions,
-except that this permission notice may be stated in a translation approved
-by the Foundation.
+(a) The FSF's Back-Cover Text is: ``You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development.''
+@end quotation
 @end copying
 
-@ifinfo
+@c Define a new index for options.
+@defcodeindex op
+@c Combine everything into one index (arbitrarily chosen to be the
+@c concept index).
+@syncodeindex op cp
 
-@dircategory Greeting Printing Program
-@dircategory Mail Reader
-@dircategory Programming
-
+@dircategory Basics
 @direntry
-* Hello, world!: (hello).       GNU `Hello, world'.
+* Hello: (hello).               Hello, GNU world.
 @end direntry
-
-@c old settings:
-@c INFO-DIR-CATEGORY Greeting Program
-@c INFO-DIR-CATEGORY Mail Reader
-@c INFO-DIR-CATEGORY Programming
-@c 
-@c START-INFO-DIR-ENTRY
-@c * Hello, world!: (hello).       GNU `Hello, world'.
-@c END-INFO-DIR-ENTRY
-@end ifinfo
-
 
 @titlepage
 @title GNU Hello
-@subtitle The Greeting Printing Program
-@subtitle Edition @value{EDITION}, for Hello Version @value{VERSION}
-@subtitle @value{UPDATED}
-@author by David MacKenzie and the GNU Hello Development Team
-
+@subtitle for version @value{VERSION}, @value{UPDATED}
+@author GNU Hello Developers (@email{bug-hello@@gnu.org})
 @page
 @vskip 0pt plus 1filll
 @insertcopying
-
 @end titlepage
 
-@node Top, , , (dir)
+@contents
 
-@ifinfo
-This file documents the the GNU @code{hello} command to print a
-greeting message.
-@end ifinfo
+
+@ifnottex
+@node Top
+@top GNU Hello
+
+This manual is for GNU Hello (version @value{VERSION}, @value{UPDATED}).
+@end ifnottex
 
 @menu
-* Instructions::	How to read this manual. 
-* Copying::		How you can copy and share @code{hello}.
-* Overview::		Preliminary information.
-* Sample::		Sample output from @code{hello}.
+* Overview::		General purpose and information.
+* Sample output::	Sample output from @code{hello}.
 * Invoking hello::	How to run @code{hello}.
-* Problems::		Reporting bugs.
-* Concept Index::	Index of concepts.
+* Reporting bugs::	Sending bug reports and feature suggestions.
+* Copying this manual:: Copying and sharing this documentation.
+* Concept index::	Index of concepts.
 @end menu
 
-@node Instructions, Copying, , Top
-@chapter How to Read This Manual
 
-@cindex reading
-@cindex manual, how to read
-@cindex how to read
-To read this manual, begin at the beginning, reading from left to right
-and top to bottom, until you get to the end.  Then stop.  You may pause
-for a beer anywhere in the middle as well, if you wish.  (Please note,
-however, that The King strongly advises against heavy use of
-prescription pharmaceuticals, based on his extensive personal and
-professional experience.)
-
-@node Copying, Overview, Instructions, Top
-@include gpl.texi
-
-@node Overview, Sample, Copying, Top
+@node Overview
 @chapter Overview
+
 @cindex greetings
 @cindex overview
 
 The GNU @code{hello} program produces a familiar, friendly greeting.
 It allows nonprogrammers to use a classic computer science tool which
-would otherwise be unavailable to them.  Because it is protected by the
-GNU General Public License, users are free to share and change it.
+would otherwise be unavailable to them.  Because it is protected by
+the GNU General Public License, users are free (in perpetuity) to
+share and change it.
 
+For the latest updates and other information, please visit the GNU
+Hello home page at @url{http://www.gnu.org/software/hello/}.
+
+@cindex joke, not
+Not to spoil the joke, but of course the practical purpose of GNU
+Hello is to serve as a minimal example of a GNU package.  So, although
+most manuals don't need to discuss the implementation of the programs
+they document, that is part of the goal here.
+
+@cindex GNU coding standards
+@cindex GNU maintainer standards
+@cindex standards, GNU coding
+@cindex standards, GNU maintainer
+First, GNU Hello follows the GNU coding standards
+(@pxref{Top,,Preface,standards, GNU Coding Standards}) and GNU
+maintainer standards (@pxref{Top,,Preface,maintain, Information for
+GNU Maintainers}).  These are the basic documents which all GNU
+packages should adhere to.
+
+The Hello package also implements recommended development practices
+not embodied in the standards, using other GNU packages and features:
+
+@itemize @bullet
+
+@item
+@cindex Automake
+@cindex Autoconf
+It uses Automake (@pxref{Top,,Introduction,Automake,GNU Automake}) and
+hence also Autoconf (@pxref{Top,,Introduction,Autoconf,GNU Autoconf})
+for configuration.
+
+@item
+@cindex Gnulib
+It uses Gnulib (@pxref{Top,,Gnulib,gnulib,GNU Gnulib}) to enhance
+portability and avoid duplication of common sources.
+
+@item
+@cindex Gettext
+GNU Gettext (@pxref{Top,,Introduction,gettext,GNU Gettext}) is used
+for internationalization support.  Hello's greeting has been translated
+into many languages.
+
+@item
+@opindex --help
+Internally, Hello uses the GNU @code{getopt_long} function
+(@pxref{Getopt Long Options,,,libc,GNU C Library}) to parse options,
+thus supporting GNU-style long options such as @option{--help}.
+
+@item
+@cindex Help2man
+Man pages are generated with GNU @code{help2man}
+(@pxref{Top,,Overview,help2man,GNU @code{help2man}}) from the
+@option{--help} output.  This relieves the maintainers of the burden
+of maintaining man documentation separately, yet provides a reasonable
+overview for man devotees.
+
+@item
+@cindex Texinfo
+Finally, Texinfo (@pxref{Top,,Introduction,texinfo,Texinfo}) is the
+documentation format for this manual.  It supports output in Info,
+HTML, PDF, DVI, plain text, XML, and other formats.
+
+@end itemize
+
+GNU Hello is implemented in C.  GNU Gettext contains ``hello world''
+examples in a variety of other programming languages; see the Gettext
+home page at @url{http://www.gnu.org/software/gettext/}.
+
+@cindex authors
+@cindex Haertel, Mike
+@cindex MacKenzie, David
+@cindex Brittenson, Jan
+@cindex Hannum, Charles
+@cindex McGrath, Roland
+@cindex Friedman, Noah
+@cindex Eichwalder, Karl
+@cindex King, The
+@cindex Berry, Karl
 GNU @code{hello} was written by Mike Haertel, David MacKenzie, Jan
 Brittenson, Charles Hannum, Roland McGrath, Noah Friedman, Karl
-Eichwalder, and @w{The King}.
+Eichwalder, Karl Berry, and @w{The King}.
 
-@node Sample, Invoking hello, Overview, Top
-@chapter Sample Output
-@cindex sample
+
+@node Sample output
+@chapter Sample output
+
+@cindex sample output
+@cindex examples
 
 Here are some realistic examples of running GNU @code{hello}.
 
@@ -129,33 +176,26 @@ This is the output of the command @samp{hello}:
 Hello, world!
 @end example
 
-This is the output of the command @samp{hello --help}:
-
-@example
-This is GNU Hello, THE greeting printing program.
-Usage: hello [OPTION]
-  -h, --help          display this help and exit
-  -v, --version       display version information and exit
-  -t, --traditional   use traditional greeting format
-  -m, --mail          print your mail
-
-Report bugs to bug-gnu-hello@@gnu.org.
-@end example
-
 This is the output of the command @samp{hello --traditional}:
 
 @example
 hello, world
 @end example
 
-@node Invoking hello, Problems, Sample, Top
+This is the output of the command @samp{hello --greeting=hi}:
+
+@example
+hi
+@end example
+
+
+@node Invoking hello
 @chapter Invoking @code{hello}
+
 @cindex invoking
-@cindex version
 @cindex options
 @cindex usage
 @cindex help
-@cindex getting help
 
 The format for running the @code{hello} program is:
 
@@ -165,57 +205,106 @@ hello @var{option} @dots{}
 
 @code{hello} supports the following options:
 
-@table @samp
+@table @option
+@item --greeting=@var{text}
+@itemx -g @var{text}
+@opindex --greeting
+@opindex -g
+Output @var{text}.
+
 @item --help
 @itemx -h
-Print an informative help message describing the options and then exit.
+@opindex --help
+@opindex -h
+Print an informative help message on standard output and exit
+successfully.
 
-@item --version
-@itemx -v
-Print the version number of @code{hello} on the standard error output
-and then exit.
+@cindex environment variables, help for
+For the @option{--help} output of GNU programs, it's strongly
+encouraged to include a brief (one or two sentences) description of
+what the program does, as well as the synopsis of how to run the
+program.  Any environment variables which affect execution should also
+be mentioned (Hello doesn't have any).
+
+@item --next-generation
+@itemx -n
+@opindex --next-generation
+@opindex -n
+@cindex Unicode
+@cindex UTF-8
+Output a modern greeting, possibly including box-drawing
+characters or other fancy stuff, using the Unicode UTF-8 locale.
 
 @item --traditional
 @itemx -t
+@opindex --traditional
+@opindex -t
 @cindex traditional
 @cindex modern
-Use the traditional greeting message @samp{hello, world} rather 
+Use the traditional greeting message @samp{hello, world} rather
 than the more modern @samp{Hello, world!}.
 
-@item --mail
-@itemx -m
-@cindex mail
-@cindex creeping feature
-@cindex feature, creeping
-@cindex feeping creature
-@cindex creature, feeping
-Print your mail on the standard output.
+@item --version
+@itemx -v
+@opindex --version
+@opindex -v
+Print the version number and licensing information of @code{hello} on
+standard output and then exit successfully.
+
 @end table
 
-@node Problems, Concept Index, Invoking hello, Top
-@chapter Reporting Bugs
-@cindex bugs
+
+@node Reporting bugs
+@chapter Reporting bugs
+
+@cindex bug reporting
 @cindex problems
+@cindex reporting bugs
 
-If you find a bug in GNU @code{hello}, please send electronic mail
-to @email{bug-gnu-hello@@gnu.org}.  Include the version
-number, which you can find by running @w{@samp{hello --version}}.  Also
-include in your message the output that the program produced and the
-output you expected.@refill
+To report bugs or suggest enhancements for GNU @code{hello}, please
+send electronic mail to @email{bug-hello@@gnu.org}.
 
-If you have other questions, comments or suggestions about GNU
-@code{hello}, contact @w{The King} via electronic mail to
-@email{elvis@@graceland.gnu.ai.mit.edu}.  @w{The King} will try to help
-you out, although he may not have time to fix your problems.
+@cindex checklist for bug reports
+For bug reports, please include enough information for the maintainers
+to reproduce the problem.  Generally speaking, that means:
 
-@node Concept Index, , Problems, Top
-@unnumbered Concept Index
+@itemize @bullet
+@item The version numbers of Hello (which you can find by running
+      @w{@samp{hello --version}}) and any other program(s) or
+      manual(s) involved.
+@item Hardware and operating system names and versions.
+@item The contents of any input files necessary to reproduce the bug.
+@item The expected behavior and/or output.
+@item A description of the problem and samples of any erroneous output.
+@item Options you gave to @command{configure} other than specifying
+      installation directories.
+@item Anything else that you think would be helpful.
+@end itemize
+
+When in doubt whether something is needed or not, include it.  It's
+better to include too much than to leave out something important.
+
+@cindex patches, contributing
+Patches are welcome; if possible, please make them with @samp{@w{diff
+-c}} (@pxref{Top,, Overview, diff, Comparing and Merging Files}) and
+include @file{ChangeLog} entries (@pxref{Change Log,,, emacs, The GNU
+Emacs Manual}).  Please follow the existing coding style.
+
+
+@node Copying this manual
+@appendix Copying this manual
+
+@menu
+* GNU Free Documentation License::  License for copying this manual.
+@end menu
+
+@include fdl.texi
+
+
+@node Concept index
+@unnumbered Concept index
 
 @cindex tail recursion
 @printindex cp
 
-@shortcontents
-@contents
 @bye
-
-@c hello.texi ends here

@@ -1,6 +1,8 @@
-## Makefile for the doc subdirectory of the GNU hello package.
-## Copyright (C) 1996, 1997 Free Software Foundation, Inc.
-
+## Process this file with automake to produce Makefile.in.
+## Makefile.am for hello/doc.
+##
+## Copyright (C) 1996, 1997, 2005 Free Software Foundation, Inc.
+##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2, or (at your option)
@@ -13,11 +15,7 @@
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, write to the Free Software
-## Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-
-## Process this file with automake to produce Makefile.in.
+## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 info_TEXINFOS = hello.texi
-hello_TEXINFOS = gpl.texi
-
-## doc/Makefile.am ends here.
+hello_TEXINFOS = fdl.texi

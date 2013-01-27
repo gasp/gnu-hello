@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: hello 1.3.4\n"
-"POT-Creation-Date: 2002-05-22 19:23+0200\n"
+"Report-Msgid-Bugs-To: bug-hello@gnu.org\n"
+"POT-Creation-Date: 2006-11-13 16:45-0800\n"
 "PO-Revision-Date: 1996-04-29 10:35\n"
 "Last-Translator: António João Rendas <arendas@telepac.pt>\n"
 "Language-Team: Português <pt@li.org>\n"
@@ -13,139 +14,18 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: src/getopt.c:693
+#: src/hello.c:95
 #, c-format
-msgid "%s: option `%s' is ambiguous\n"
-msgstr "%s: a opção `%s' é ambígua\n"
+msgid "%s: extra operand: %s\n"
+msgstr ""
 
-#: src/getopt.c:718
-#, c-format
-msgid "%s: option `--%s' doesn't allow an argument\n"
-msgstr "%s: a opção `--%s' não admite um argumento\n"
-
-#: src/getopt.c:723
-#, c-format
-msgid "%s: option `%c%s' doesn't allow an argument\n"
-msgstr "%s: a opção `%c%s' não admite um argumento\n"
-
-#: src/getopt.c:741 src/getopt.c:914
-#, c-format
-msgid "%s: option `%s' requires an argument\n"
-msgstr "%s: a opção `%s' requer um argumento\n"
-
-#: src/getopt.c:770
-#, c-format
-msgid "%s: unrecognized option `--%s'\n"
-msgstr "%s: opção desconhecida `--%s'\n"
-
-#: src/getopt.c:774
-#, c-format
-msgid "%s: unrecognized option `%c%s'\n"
-msgstr "%s: opção desconhecida `%c%s'\n"
-
-#: src/getopt.c:800
-#, c-format
-msgid "%s: illegal option -- %c\n"
-msgstr "%s: opção ilegal -- %c\n"
-
-#: src/getopt.c:803
-#, fuzzy, c-format
-msgid "%s: invalid option -- %c\n"
-msgstr "%s: opção ilegal -- %c\n"
-
-#: src/getopt.c:833 src/getopt.c:963
-#, fuzzy, c-format
-msgid "%s: option requires an argument -- %c\n"
-msgstr "%s: a opção `%s' requer um argumento\n"
-
-#: src/getopt.c:880
-#, fuzzy, c-format
-msgid "%s: option `-W %s' is ambiguous\n"
-msgstr "%s: a opção `%s' é ambígua\n"
-
-#: src/getopt.c:898
-#, fuzzy, c-format
-msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr "%s: a opção `--%s' não admite um argumento\n"
-
-#: src/hello.c:164
-msgid "Too many arguments\n"
-msgstr "Demasiados argumentos\n"
-
-#: src/hello.c:165
+#: src/hello.c:97
 #, fuzzy, c-format
 msgid "Try `%s --help' for more information.\n"
 msgstr "Usa `%s --help' para mais informação\n"
 
-#. TRANSLATORS: --help output 1
-#. no-wrap
-#: src/hello.c:177
-msgid "GNU hello, THE greeting printing program.\n"
-msgstr ""
-
-#. TRANSLATORS: --help output 2
-#. no-wrap
-#: src/hello.c:182
+#: src/hello.c:104
 #, c-format
-msgid "Usage: %s [OPTION]\n"
-msgstr ""
-
-#. TRANSLATORS: --help output 3 : options 1/2
-#. no-wrap
-#: src/hello.c:188
-msgid ""
-"  -h, --help          display this help and exit\n"
-"  -v, --version       display version information and exit\n"
-msgstr ""
-
-#. TRANSLATORS: --help output 4 : options 2/2
-#. no-wrap
-#: src/hello.c:195
-msgid ""
-"  -t, --traditional       use traditional greeting format\n"
-"  -n, --next-generation   use next-generation greeting format\n"
-"  -m, --mail              print your mail\n"
-msgstr ""
-
-#. TRANSLATORS: --help output 5 (end)
-#. TRANSLATORS, please don't forget to add the contact address for
-#. your translation!
-#. no-wrap
-#: src/hello.c:205
-#, c-format
-msgid "Report bugs to <%s>.\n"
-msgstr ""
-
-#: src/hello.c:217
-#, c-format
-msgid ""
-"Copyright (C) %s Free Software Foundation, Inc.\n"
-"There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\n"
-"PARTICULAR PURPOSE.  You may redistribute copies of GNU %s under the terms\n"
-"of the GNU General Public License.\n"
-"For more information about these matters, see the file named COPYING.\n"
-msgstr ""
-
-#: src/hello.c:228
-#, c-format
-msgid "%s: Incompatible flags: -m and -t\n"
-msgstr ""
-
-#: src/hello.c:260
-#, c-format
-msgid "%s: Who are you?\n"
-msgstr "%s: Quem és tu?\n"
-
-#: src/hello.c:282
-#, c-format
-msgid "%s: Cannot find your mail spool file.\n"
-msgstr ""
-
-#: src/hello.c:326
-msgid "Nothing happens here."
-msgstr "Aqui não se passa nada."
-
-#: src/hello.c:332
 msgid "hello, world\n"
 msgstr "olá, mundo\n"
 
@@ -155,21 +35,172 @@ msgstr "olá, mundo\n"
 #.
 #. [Note: For best viewing results use a UTF-8 locale, please.]
 #.
-#: src/hello.c:340
+#: src/hello.c:113
+#, c-format
 msgid ""
 "+---------------+\n"
 "| Hello, world! |\n"
 "+---------------+\n"
 msgstr ""
 
-#: src/hello.c:346
+#: src/hello.c:122
 msgid "Hello, world!"
 msgstr "Olá, mundo!"
 
-#: src/hello.c:361
+#. TRANSLATORS: --help output 1 (synopsis)
+#. no-wrap
+#: src/hello.c:140
+#, c-format
+msgid "Usage: %s [OPTION]...\n"
+msgstr ""
+
+#. TRANSLATORS: --help output 2 (brief description)
+#. no-wrap
+#: src/hello.c:145
+msgid "Print a friendly, customizable greeting.\n"
+msgstr ""
+
+#. TRANSLATORS: --help output 3: options 1/2
+#. no-wrap
+#: src/hello.c:151
+msgid ""
+"  -h, --help          display this help and exit\n"
+"  -v, --version       display version information and exit\n"
+msgstr ""
+
+#. TRANSLATORS: --help output 4: options 2/2
+#. no-wrap
+#: src/hello.c:158
+msgid ""
+"  -t, --traditional       use traditional greeting format\n"
+"  -n, --next-generation   use next-generation greeting format\n"
+"  -g, --greeting=TEXT     use TEXT as the greeting message\n"
+msgstr ""
+
+#. TRANSLATORS: --help output 5 (end)
+#. TRANSLATORS: the placeholder indicates the bug-reporting address
+#. for this application.  Please add _another line_ with the
+#. address for translation bugs.
+#. no-wrap
+#: src/hello.c:169
+#, c-format
+msgid "Report bugs to <%s>.\n"
+msgstr ""
+
+#: src/hello.c:187
+#, c-format
+msgid ""
+"Copyright (C) %s Free Software Foundation, Inc.\n"
+"License: GNU GPL v2+ <http://www.gnu.org/licenses/gpl.html>\n"
+"This is free software.  There is NO WARRANTY, to the extent permitted by "
+"law.\n"
+msgstr ""
+
+#: gnulib/lib/error.c:125
+msgid "Unknown system error"
+msgstr ""
+
+#: gnulib/lib/getopt.c:531 gnulib/lib/getopt.c:547
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: a opção `%s' é ambígua\n"
+
+#: gnulib/lib/getopt.c:580 gnulib/lib/getopt.c:584
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: a opção `--%s' não admite um argumento\n"
+
+#: gnulib/lib/getopt.c:593 gnulib/lib/getopt.c:598
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: a opção `%c%s' não admite um argumento\n"
+
+#: gnulib/lib/getopt.c:641 gnulib/lib/getopt.c:660 gnulib/lib/getopt.c:976
+#: gnulib/lib/getopt.c:995
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: a opção `%s' requer um argumento\n"
+
+#: gnulib/lib/getopt.c:698 gnulib/lib/getopt.c:701
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: opção desconhecida `--%s'\n"
+
+#: gnulib/lib/getopt.c:709 gnulib/lib/getopt.c:712
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: opção desconhecida `%c%s'\n"
+
+#: gnulib/lib/getopt.c:764 gnulib/lib/getopt.c:767
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: opção ilegal -- %c\n"
+
+#: gnulib/lib/getopt.c:773 gnulib/lib/getopt.c:776
 #, fuzzy, c-format
-msgid "%s: Virtual memory exhausted\n"
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: opção ilegal -- %c\n"
+
+#: gnulib/lib/getopt.c:828 gnulib/lib/getopt.c:844 gnulib/lib/getopt.c:1048
+#: gnulib/lib/getopt.c:1066
+#, fuzzy, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: a opção `%s' requer um argumento\n"
+
+#: gnulib/lib/getopt.c:897 gnulib/lib/getopt.c:913
+#, fuzzy, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: a opção `%s' é ambígua\n"
+
+#: gnulib/lib/getopt.c:937 gnulib/lib/getopt.c:955
+#, fuzzy, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: a opção `--%s' não admite um argumento\n"
+
+#: gnulib/lib/closeout.c:74
+msgid "write error"
+msgstr ""
+
+#. TRANSLATORS:
+#. Get translations for open and closing quotation marks.
+#.
+#. The message catalog should translate "`" to a left
+#. quotation mark suitable for the locale, and similarly for
+#. "'".  If the catalog has no translation,
+#. locale_quoting_style quotes `like this', and
+#. clocale_quoting_style quotes "like this".
+#.
+#. For example, an American English Unicode locale should
+#. translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
+#. should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
+#. MARK).  A British English Unicode locale should instead
+#. translate these to U+2018 (LEFT SINGLE QUOTATION MARK) and
+#. U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
+#.
+#. If you don't know what to put here, please see
+#. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+#. and use glyphs suitable for your language.
+#: gnulib/lib/quotearg.c:245
+msgid "`"
+msgstr ""
+
+#: gnulib/lib/quotearg.c:246
+msgid "'"
+msgstr ""
+
+#: gnulib/lib/xalloc-die.c:35
+#, fuzzy
+msgid "memory exhausted"
 msgstr "%s: nao há mais memória virtual\n"
+
+#~ msgid "Too many arguments\n"
+#~ msgstr "Demasiados argumentos\n"
+
+#~ msgid "%s: Who are you?\n"
+#~ msgstr "%s: Quem és tu?\n"
+
+#~ msgid "Nothing happens here."
+#~ msgstr "Aqui não se passa nada."
 
 #, fuzzy
 #~ msgid ""

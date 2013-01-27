@@ -1,6 +1,7 @@
 /* hello.c -- print a greeting message and exit.
-   Copyright (C) 1992, 1995, 1996, 1997-1999, 2000-2002
-                 Free Software Foundation, Inc.
+
+   Copyright (C) 1992, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+   2005, 2006 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -13,116 +14,39 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-   USA.  */
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* AIX requires this to be the first thing in the file.  */
-#if defined (_AIX) && !defined (__GNUC__)
- #pragma alloca
-#endif
-
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
-
-#include <getopt.h>
-#include <stdio.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <pwd.h>
-#include <errno.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#ifdef HAVE_LOCALE_H
-#include <locale.h>
-#endif
-
-#if ENABLE_NLS
-#include <libintl.h>
-#define _(String) gettext (String)
-#else
-#define _(String) (String)
-#endif
-
-#ifndef errno
-extern int errno;
-#endif
-
-#ifdef	STDC_HEADERS
-#include <stdlib.h>
-#else	/* Not STDC_HEADERS */
-extern void exit ();
-extern char *malloc ();
-#endif	/* STDC_HEADERS */
-
-#ifdef	HAVE_STRING_H
-#include <string.h>
-#else
-#include <strings.h>
-#endif
-
-#ifdef HAVE_FCNTL_H
-#include <fcntl.h>
-#endif
-#ifdef HAVE_SYS_FILE_H
-#include <sys/file.h>
-#endif
-
-#ifdef	__GNUC__
-#undef	alloca
-#define	alloca(n)	__builtin_alloca (n)
-#else	/* Not GCC.  */
-#ifdef	HAVE_ALLOCA_H
-#include <alloca.h>
-#else	/* Not HAVE_ALLOCA_H.  */
-#ifndef	_AIX
-extern char *alloca ();
-#endif	/* Not _AIX.  */
-#endif	/* HAVE_ALLOCA_H.  */
-#endif	/* GCC.  */
-
-#ifdef HAVE_SYS_PARAM_H
-/* To possibly get the definition of DEV_BSIZE. */
-#include <sys/param.h>
-#endif
 #include "system.h"
 
-#define the (1)
+/* String containing name the program is called with.  */
+const char *program_name;
 
-struct option longopts[] =
+static const struct option longopts[] =
 {
-  { "version", no_argument, NULL, 'v' },
+  { "greeting", required_argument, NULL, 'g' },
   { "help", no_argument, NULL, 'h' },
-#define lives
-  { "traditional", no_argument, NULL, 't' },
   { "next-generation", no_argument, NULL, 'n' },
-  { "mail", no_argument, NULL, 'm' },
+  { "traditional", no_argument, NULL, 't' },
+  { "version", no_argument, NULL, 'v' },
   { NULL, 0, NULL, 0 }
 };
 
-extern char version[];
-
-static char *progname;
+static void print_help (void);
+static void print_version (void);
 
 int
-main (argc, argv)
-     int argc;
-     char *argv[];
+main (int argc, char *argv[])
 {
   int optc;
-  int h = 0, v = 0, t = 0, m = 0, n = 0, lose = 0, z = 0;
+  int t = 0, n = 0, lose = 0;
+  const char *greeting = NULL;
 
-  progname = argv[0];
+  program_name = argv[0];
 
-#ifdef HAVE_SETLOCALE
   /* Set locale via LC_ALL.  */
   setlocale (LC_ALL, "");
-#endif
 
 #if ENABLE_NLS
   /* Set the text message domain.  */
@@ -130,19 +54,28 @@ main (argc, argv)
   textdomain (PACKAGE);
 #endif
 
-#define king
-  while ((optc = getopt_long (argc, argv, "hmntv", longopts, (int *) 0))
-         != EOF)
+  /* Even exiting has subtleties.  The /dev/full device on GNU/Linux
+     can be used for testing whether writes are checked properly.  For
+     instance, hello >/dev/null should exit unsuccessfully.  On exit,
+     if any writes failed, change the exit status.  This is
+     implemented in the Gnulib module "closeout".  */
+  atexit (close_stdout);
+
+  while ((optc = getopt_long (argc, argv, "g:hntv", longopts, NULL)) != -1)
     switch (optc)
       {
+      /* One goal here is having --help and --version exit immediately,
+         per GNU coding standards.  */
       case 'v':
-        v = 1;
+        print_version ();
+        exit (EXIT_SUCCESS);
+        break;
+      case 'g':
+        greeting = optarg;
         break;
       case 'h':
-        h = 1;
-        break;
-      case 'm':
-        m = 1;
+        print_help ();
+        exit (EXIT_SUCCESS);
         break;
       case 'n':
         n = 1;
@@ -154,215 +87,106 @@ main (argc, argv)
         lose = 1;
         break;
       }
-  
-  if (optind == argc - 1 && strcmp (argv[optind], "sailor") == 0)
-    z = 1;
-  else if (lose || optind < argc)
+
+  if (lose || optind < argc)
     {
       /* Print error message and exit.  */
       if (optind < argc)
-        fputs (_("Too many arguments\n"), stderr);
-      fprintf (stderr, _("Try `%s --help' for more information.\n"), 
-               progname);
-      exit (1);
+        fprintf (stderr, _("%s: extra operand: %s\n"),
+		 program_name, argv[optind]);
+      fprintf (stderr, _("Try `%s --help' for more information.\n"),
+               program_name);
+      exit (EXIT_FAILURE);
     }
 
-  /* `help' should come first.  If `help' is requested, ignore the other
-     options. */
-  if (h)
-    {
-      /* Print help info and exit.  */
-      /* TRANSLATORS: --help output 1
-         no-wrap */
-      fputs (_("\
-GNU hello, THE greeting printing program.\n"), stdout);
-      printf ("\n");
-      /* TRANSLATORS: --help output 2
-         no-wrap */
-      printf (_("\
-Usage: %s [OPTION]\n"), progname);
+  /* Print greeting message and exit. */
+  if (t)
+    printf (_("hello, world\n"));
 
-      printf ("\n");
-      /* TRANSLATORS: --help output 3 : options 1/2
-         no-wrap */
-      fputs (_("\
-  -h, --help          display this help and exit\n\
-  -v, --version       display version information and exit\n"), stdout);
+  else if (n)
+    /* TRANSLATORS: Use box drawing characters or other fancy stuff
+       if your encoding (e.g., UTF-8) allows it.  If done so add the
+       following note, please:
 
-      printf ("\n");
-      /* TRANSLATORS: --help output 4 : options 2/2
-         no-wrap */
-      fputs (_("\
-  -t, --traditional       use traditional greeting format\n\
-  -n, --next-generation   use next-generation greeting format\n\
-  -m, --mail              print your mail\n"), stdout);
-
-      printf ("\n");
-      /* TRANSLATORS: --help output 5 (end)
-         TRANSLATORS, please don't forget to add the contact address for
-         your translation!
-         no-wrap */
-      printf (_("\
-Report bugs to <%s>.\n"), PACKAGE_BUGREPORT);
-
-      exit (0);
-    }
-
-  if (v)
-    {
-      /* Print version number.  */
-      printf ("hello - GNU %s %s\n", PACKAGE, version);
-      /* xgettext: no-wrap */
-      printf ("\n");
-      printf (_("\
-Copyright (C) %s Free Software Foundation, Inc.\n\
-There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\n\
-PARTICULAR PURPOSE.  You may redistribute copies of GNU %s under the terms\n\
-of the GNU General Public License.\n\
-For more information about these matters, see the file named COPYING.\n"),
-              "1992, 1993, 1997-2001", PACKAGE);
-      exit (0);
-    }
-  if (m && t)
-    {
-      fprintf (stderr, _("%s: Incompatible flags: -m and -t\n"), progname);
-      exit (1);
-    }
-  
-  if (m)
-    {
-      /* Try to read mail. */
-      char *mailname, *buf, *getenv ();
-      int mailfd, cc;
-      struct stat st;
-      
-      mailname = getenv ("MAIL");
-      if (!mailname)
-        {
-          static char *dirs[] =
-          {
-            "/var/spool/mail",
-            "/usr/spool/mail",
-            "/var/mail",
-            "/usr/mail",
-            0
-          };
-          char **d;
-          unsigned int dirlen, userlen;
-          
-          char *user = getenv ("USER");
-          
-          if (! user)
-            {
-              struct passwd *pwd = getpwuid (getuid ());
-              if (! pwd)
-                {
-                  fprintf (stderr, _("%s: Who are you?\n"), progname);
-                  exit (1);
-                }
-              user = pwd->pw_name;
-            }
-	  
-	  dirlen = 0;
-	  for (d = dirs; *d != 0; ++d)
-	    {
-	      unsigned int len = strlen (*d);
-	      if (len > dirlen)
-		dirlen = len;
-	    }
-
-	  userlen = strlen (user);
-
-	  mailname = (char *) alloca (dirlen + 1 + userlen + 1);
-
-	  d = dirs;
-	  do
-	    {
- 	      if (*d == 0) {
-            fprintf (stderr, _("%s: Cannot find your mail spool file.\n"),
-                     progname);
-            exit(1);
- 	      }
- 	      sprintf (mailname, "%s/%s", *d, user);
-	      mailfd = open (mailname, O_RDONLY);
-	    ++d;
-        } while (mailfd == -1 && (errno == ENOENT || errno == ENOTDIR));
-	}
-      else
-	mailfd = open (mailname, O_RDONLY);
-
-      if (mailfd == -1)
-	{
-	  perror (mailname);
-	  exit (1);
-	}
-      if (fstat (mailfd, &st) == -1)
-	{
-	  perror (mailname);
-	  exit (1);
-	}
-      buf = (char *) alloca (ST_BLKSIZE(st));
-      while the king lives
-	{
-	  cc = read (mailfd, buf, ST_BLKSIZE(st));
-	  
-	  if (cc == -1)
-	    {
-	      perror (mailname);
-	      exit (1);
-	    }
-	  if (cc == 0)
-	    break;
-	  
-	  cc = write (1, buf, cc);
-	  if (cc == -1)
-	    {
-	      perror (mailname);
-	      exit (1);
-	    }
-	}
-    }
-  else if (z)
-    puts (_("Nothing happens here."));
-
-  else
-    /* Print greeting message and exit. */
-    {
-      if (t)
-        printf (_("hello, world\n"));
-      else if (n)
-	/* TRANSLATORS: Use box drawing characters or other fancy stuff
-	   if your encoding (e.g., UTF-8) allows it.  If done so add the
-	   following note, please:
-
-	   [Note: For best viewing results use a UTF-8 locale, please.]
-	*/
+       [Note: For best viewing results use a UTF-8 locale, please.]
+    */
 	printf (_("\
 +---------------+\n\
 | Hello, world! |\n\
 +---------------+\n\
 "));
-      else
-        puts (_("Hello, world!"));
-    }
 
-  exit (0);
-}
-
-#ifdef C_ALLOCA /* xmalloc() is only used by alloca.c.  */
-
-char *
-xmalloc (size)
-     unsigned int size;
-{
-  char *ptr = malloc (size);
-  if (! ptr)
+  else
     {
-      fprintf (stderr, _("%s: Virtual memory exhausted\n"), progname);
-      exit (1);
+      if (!greeting)
+        greeting = _("Hello, world!");
+      puts (greeting);
     }
-  return ptr;
+  
+  exit (EXIT_SUCCESS);
 }
-#endif /* C_ALLOCA */
 
-/* hello.c ends here */
+
+
+/* Print help info.  This long message is split into
+   several pieces to help translators be able to align different
+   blocks and identify the various pieces.  */
+
+static void
+print_help (void)
+{
+  /* TRANSLATORS: --help output 1 (synopsis)
+     no-wrap */
+        printf (_("\
+Usage: %s [OPTION]...\n"), program_name);
+
+  /* TRANSLATORS: --help output 2 (brief description)
+     no-wrap */
+  fputs (_("\
+Print a friendly, customizable greeting.\n"), stdout);
+
+  puts ("");
+  /* TRANSLATORS: --help output 3: options 1/2
+     no-wrap */
+  fputs (_("\
+  -h, --help          display this help and exit\n\
+  -v, --version       display version information and exit\n"), stdout);
+
+  puts ("");
+  /* TRANSLATORS: --help output 4: options 2/2
+     no-wrap */
+  fputs (_("\
+  -t, --traditional       use traditional greeting format\n\
+  -n, --next-generation   use next-generation greeting format\n\
+  -g, --greeting=TEXT     use TEXT as the greeting message\n"), stdout);
+
+  printf ("\n");
+  /* TRANSLATORS: --help output 5 (end)
+     TRANSLATORS: the placeholder indicates the bug-reporting address
+     for this application.  Please add _another line_ with the
+     address for translation bugs.
+     no-wrap */
+  printf (_("\
+Report bugs to <%s>.\n"), PACKAGE_BUGREPORT);
+}
+
+
+
+/* Print version and copyright information.  */
+
+static void
+print_version (void)
+{
+  printf ("hello (GNU %s) %s\n", PACKAGE, VERSION);
+  /* xgettext: no-wrap */
+  puts ("");
+  
+  /* It is important to separate the year from the rest of the message,
+     as done here, to avoid having to retranslate the message when a new
+     year comes around.  */
+  printf (_("\
+Copyright (C) %s Free Software Foundation, Inc.\n\
+License: GNU GPL v2+ <http://www.gnu.org/licenses/gpl.html>\n\
+This is free software.  There is NO WARRANTY, to the extent permitted by law.\n"),
+              "2006");
+}

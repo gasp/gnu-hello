@@ -1,10 +1,20 @@
 #! /bin/sh
+# Test standard GNU greeting.
+#
+# Copyright (C) 2001, 2006 Free Software Foundation, Inc.
+#
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.
 # This script takes one argument.
 
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
+# We force the C locale here, since we are checking normal output,
+# which will be translated.
+
 LANGUAGE=
-LC_ALL=
+LC_ALL=C
 LC_MESSAGES=
 LANG=
 export LANGUAGE LC_ALL LC_MESSAGES LANG
@@ -16,18 +26,12 @@ EOF
 
 tmpfiles="$tmpfiles hello-test1.out"
 : ${HELLO=hello}
-${HELLO} > hello-test1.out
-
-# $HELLO > test.out
-# $HELLO sailor >> test.out
-# $HELLO --traditional >> test.out
+${HELLO}  | tr -d '\r' >hello-test1.out
 
 : ${DIFF=diff}
 ${DIFF} hello-test1.ok hello-test1.out
 result=$?
 
-rm -f $tmpfiles
+rm -fr $tmpfiles
 
 exit $result
-
-# hello ends here

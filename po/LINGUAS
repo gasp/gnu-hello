@@ -1,2 +1,50 @@
 # Set of available languages.
-ca da de de_DE el eo es et fi fr gl he hr hu id it ja ko lv nb nl nn pl pt pt_BR ru sk sl sv tr uk
+#
+#  Copyright (C) 1992, 1993, 1995, 1996, 1997, 1998, 1999, 2000, 2001,
+#  2002, 2003, 2005, 2006 Free Software Foundation, Inc.
+#
+#  Copying and distribution of this file, with or without modification,
+#  are permitted in any medium without royalty provided the copyright
+#  notice and this notice are preserved.
+bg
+ca
+da
+de
+de_DE
+el
+eo
+es
+es_AR
+et
+eu
+fa
+fi
+fr
+ga
+gl
+he
+hr
+hu
+id
+it
+ja
+ka
+ko
+lv
+nb
+nl
+nn
+pl
+pt
+pt_BR
+ro
+ru
+sk
+sl
+sr
+sv
+tr
+uk
+vi
+zh_CN
+zh_TW

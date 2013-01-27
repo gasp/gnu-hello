@@ -1,56 +1,57 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(hello, 2.1.1, bug-gnu-hello@gnu.org)
+dnl
+dnl This file is free software; as a special exception the author gives
+dnl unlimited permission to copy and/or distribute it, with or without
+dnl modifications, as long as this notice is preserved.
+dnl
+dnl This program is distributed in the hope that it will be useful, but
+dnl WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+dnl implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+AC_INIT([GNU Hello], [2.2], [bug-hello@gnu.org])
+
+dnl Must come before AM_INIT_AUTOMAKE.
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([dist-bzip2 readme-alpha])
+
+# Minimum Autoconf version required.
+AC_PREREQ(2.60)
+
+# Where to generate output; srcdir location.
+AC_CONFIG_HEADERS([config.h:config.in])dnl Keep filename to 8.3 for MS-DOS.
 AC_CONFIG_SRCDIR([src/hello.c])
 
-AC_PREREQ(2.52)
-
-AC_SUBST(ke_PRE, 2.1.0)
-AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER(config.h)
-dnl AC_SUBST(PACKAGE_BUGREPORT, bug-gnu-hello@gnu.org)
-dnl AH_TEMPLATE(PACKAGE_BUGREPORT)
-dnl AC_DEFINE_UNQUOTED(PACKAGE_BUGREPORT, "$PACKAGE_BUGREPORT")
-
-dnl Set of available languages now in po/LINGUAS.
-
 dnl Checks for programs.
+# We need a C compiler.
 AC_PROG_CC
-AC_ISC_POSIX
 
-dnl Check for build configuration.
-dnl AM_PROG_LIBTOOL
+# Since we use gnulib: gl_EARLY must be called as soon as possible after
+# the C compiler is checked.  The others could be later, but we just
+# keep everything together.
+gl_EARLY
+gl_INIT
 
-dnl Checks for libraries.
+# GNU help2man creates man pages from --help output; in many cases, this
+# is sufficient, and obviates the need to maintain man pages separately.
+# However, this means invoking executables, which we generally cannot do
+# when cross-compiling, so we test to avoid that (the variable
+# "cross_compiling" is set by AC_PROG_CC).
+if test $cross_compiling = no; then
+  AM_MISSING_PROG(HELP2MAN, help2man)
+else
+  HELP2MAN=:
+fi
 
-dnl Checks for header files.
-AC_HEADER_STDC([])
-AC_CHECK_HEADERS([string.h fcntl.h sys/file.h sys/param.h])
+# i18n support from GNU gettext.
+AM_GNU_GETTEXT_VERSION([0.16])
+AM_GNU_GETTEXT([external])
 
-dnl Checks for library functions.
-AC_FUNC_ALLOCA
-
-dnl Check for st_blksize in struct stat
-AC_DIAGNOSE([obsolete],[AC_STRUCT_ST_BLKSIZE:
-        your code should no longer depend upon `HAVE_ST_BLKSIZE', but
-        `HAVE_STRUCT_STAT_ST_BLKSIZE'.  Remove this warning and
-        the `AC_DEFINE' when you adjust the code.])
-AC_CHECK_MEMBERS([struct stat.st_blksize],[AC_DEFINE(HAVE_ST_BLKSIZE, 1,
-                            [Define if your `struct stat' has
-                             `st_blksize'.  Deprecated, use
-                             `HAVE_STRUCT_STAT_ST_BLKSIZE' instead.])])
-
-
-dnl internationalization macros
-AM_GNU_GETTEXT
-
-dnl for help2man
-AC_CHECK_PROG(PERL, perl, perl)
-
-AC_CONFIG_FILES([Makefile contrib/Makefile doc/Makefile intl/Makefile \
-           man/Makefile po/Makefile.in \
-	   m4/Makefile \
-           src/Makefile tests/Makefile])
-AC_CONFIG_COMMANDS([default],[[ echo timestamp > stamp-h ]],[[]])
+AC_CONFIG_FILES([Makefile
+           contrib/Makefile
+           doc/Makefile
+           gnulib/lib/Makefile
+           man/Makefile
+           po/Makefile.in
+           src/Makefile
+           tests/Makefile])
 AC_OUTPUT
-
-dnl configure.in ends here

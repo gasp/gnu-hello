@@ -1,39 +1,51 @@
-## Makefile for the toplevel directory of GNU hello.
-## Copyright (C) 1997-98 Free Software Foundation, Inc.
-##
-## This program is free software; you can redistribute it and/or modify
-## it under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 2, or (at your option)
-## any later version.
-##
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with this program; if not, write to the Free Software
-## Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# Process this file with automake to produce Makefile.in (in this,
+# and all subdirectories).
+#
+# Makefile for the top-level directory of GNU hello.
+# Copyright (C) 1997, 1998, 2005, 2006 Free Software Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-## Process this file with automake to produce Makefile.in
+# Find gnulib headers.
+ACLOCAL_AMFLAGS = -I gnulib/m4
 
-AUTOMAKE_OPTIONS = 1.5 gnits dist-bzip2
-ACLOCAL_AMFLAGS = -I m4
+# Additional files to distribute.
+EXTRA_DIST = ChangeLog.O
 
-MAINT_CHARSET = latin1
+# Subdirectories to descend into.
+SUBDIRS = contrib gnulib/lib po src doc man tests
 
-# previous version
-ke_PRE = @ke_PRE@
+# `make diff' produces a diff against the previous version, given both
+# .tar.gz's in the current directory.  This should only be done when an
+# official release is made (and only if you care to provide diffs).
+#
+hello_pre = 2.1.1
+#
+diff: diffcheck
+	@(echo "To apply these patches, cd to the main directory of the package"; \
+	  echo "and then use \`patch -p1 < hello-XXX.diff'."; \
+	  echo "Before building the program, run \`autogen.sh'."; ) > \
+	    $(PACKAGE)-$(hello_pre)-$(VERSION).diff
+	-diff -rc2P --exclude=configure --exclude=config.h.in --exclude=*.info \
+	    --exclude=*.gmo --exclude=aclocal.m4 \
+	    $(PACKAGE)-$(hello_pre) $(PACKAGE)-$(VERSION) >> \
+	    $(PACKAGE)-$(hello_pre)-$(VERSION).diff
+	gzip --force --best $(PACKAGE)-$(hello_pre)-$(VERSION).diff
 
-EXTRA_DIST = BUGS ChangeLog.O config.rpath
-
-SUBDIRS = contrib doc intl po src man m4 tests
-
-# To produce a diff against the previous version, untar this version
-# and the previous version in the same directory and run `make diff'.
-# Only the maintainer should do this.
 diffcheck:
-	for d in $(PACKAGE)-$(ke_PRE) $(PACKAGE)-$(VERSION) ; do \
+	for d in $(PACKAGE)-$(hello_pre) $(PACKAGE)-$(VERSION) ; do \
 	    if test ! -d $$d ; then \
 	        if test -r $$d.tar.gz ; then \
 	            tar -zxf $$d.tar.gz ; \
@@ -44,25 +56,28 @@ diffcheck:
 	    fi ; \
 	done
 
-diff: diffcheck
-	echo -e "\
-To apply these patches, cd to the main directory of the package\n\
-and then use \`patch -p1 < hello-XXX.diff'.\n\
-Before building the programm run \`autoconf' and \`autoheader' to rebuild\n\
-\`configure' and \`config.h.in'.\n\n" > \
-	    $(PACKAGE)-$(ke_PRE)-$(VERSION).diff
-	-diff -rc2P --exclude=configure --exclude=config.h.in --exclude=*.info \
-	    --exclude=*.gmo --exclude=aclocal.m4 \
-	    $(PACKAGE)-$(ke_PRE) $(PACKAGE)-$(VERSION) >> \
-	    $(PACKAGE)-$(ke_PRE)-$(VERSION).diff
-	gzip --force --best $(PACKAGE)-$(ke_PRE)-$(VERSION).diff
-
-pot-to-trans:
-# 	gzip < po/hello.pot \
-# 	  | uuencode -m hello-$(VERSION).pot.gz \
-# 	  | mail -s "TP-Robot hello-$(VERSION).pot" translation@iro.umontreal.ca
-	echo "http://www.gnu.franken.de/ke/hello/hello-$(VERSION).tar.bz2" \
-	  | mail -s "TP-Robot hello-$(VERSION).pot" \
-	    translation@iro.umontreal.ca
-	
-## Makefile.am ends here
+# From coreutils.
+# Verify that all source files using _() are listed in po/POTFILES.in.
+# The idea is to run this before making pretests, as well as official
+# releases, so that 
+po-check:
+	if test -f po/POTFILES.in; then					\
+	  grep -E -v '^(#|$$)' po/POTFILES.in				\
+	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
+	  files=;							\
+	  for file in $$($(CVS_LIST_EXCEPT)) `find * -name '*.[ch]'`; do \
+	    case $$file in						\
+	    djgpp/* | man/*) continue;;					\
+	    esac;							\
+	    case $$file in						\
+	    *.[ch])							\
+	      base=`expr " $$file" : ' \(.*\)\..'`;			\
+	      { test -f $$base.l || test -f $$base.y; } && continue;;	\
+	    esac;							\
+	    files="$$files $$file";					\
+	  done;								\
+	  grep -E -l '\b(N?_|gettext *)\([^)"]*("|$$)' $$files		\
+	    | sort -u > $@-2;						\
+	  diff -u $@-1 $@-2 || exit 1;					\
+	  rm -f $@-1 $@-2;						\
+	fi

@@ -1,5 +1,7 @@
-## Makefile for program src directory in GNU hello.
-## Copyright (C) 1996, 1997, 2001 Free Software Foundation, Inc.
+## Process this file with automake to produce Makefile.in.
+## Makefile.am for hello/src.
+##
+## Copyright (C) 1996, 1997, 2001, 2005, 2006 Free Software Foundation, Inc.
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -12,24 +14,15 @@
 ## GNU General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with this program; if not, write to the Free Software
-## Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-## USA.
-
-## Process this file with automake to produce Makefile.in.
+## along with this program; if not, write to the Free Software Foundation,
+## Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 bin_PROGRAMS = hello
-hello_SOURCES = hello.c version.c getopt.c getopt1.c getopt.h system.h 
-# hello_SOURCES = getopt.c getopt1.c getopt.h hello.c system.h \
-# version-etc.h version-etc.c
-hello_LDADD = @LIBINTL@ @ALLOCA@
+hello_SOURCES = hello.c system.h
+
+hello_LDADD = @LIBINTL@ ../gnulib/lib/libgnu.a
 
 localedir = $(datadir)/locale
 
-INCLUDES = -I. -I$(srcdir) -I.. -I../intl -I$(top_srcdir)/intl
+AM_CPPFLAGS = -I$(top_srcdir)/gnulib/lib -I$(top_builddir)/gnulib/lib
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-
-## # Automake cannot handle this now (version 1.0).
-## $(bin_PROGRAMS): $(LDADD)
-
-## src/Makefile.am ends here

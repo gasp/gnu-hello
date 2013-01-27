@@ -1,3 +1,25 @@
+2006-11-23  Karl Berry  <karl@gnu.org>
+
+	* hello.texi (Introduction): capitalize Gnulib, for consistency.
+
+2006-11-08  Karl Berry  <karl@gnu.org>
+
+	* hello.texi (Sample output): remove wrong --help example.
+	Change node names to "Initial cap only" style.
+
+2006-07-15  Karl Berry  <karl@gnu.org>
+
+	* hello.texi: thoroughly update the entire manual.
+
+2006-05-03  Karl Berry  <karl@gnu.org>
+
+	* hello.texi: bring somewhat up to date.
+
+2005-03-21  Karl Berry  <karl@gnu.org>
+
+	* doc/hello.texi: switch to GFDL; make Texinfo source follow
+	current practices.
+
 2002-05-25  Karl Eichwalder  <ke@gnu.franken.de>
 
 	* gpl.texi: Use the contents auf emacs.texi (Emacs CVS).
@@ -82,5 +104,9 @@ Tue Dec 19 08:26:09 1995  Karl Eichwalder  <ke@ke.Central.DE>
 
 	* Makefile.in, version.texi: New file.
 
-doc/ChangeLog ends here
-	
+Copyright (C) 1995, 1996, 1997, 1998, 1999, 2002, 2005, 2006
+Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
