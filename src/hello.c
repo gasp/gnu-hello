@@ -1,11 +1,11 @@
 /* hello.c -- print a greeting message and exit.
 
    Copyright (C) 1992, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
-   2005, 2006 Free Software Foundation, Inc.
+   2005, 2006, 2007 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
+   the Free Software Foundation; either version 3, or (at your option)
    any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -56,7 +56,7 @@ main (int argc, char *argv[])
 
   /* Even exiting has subtleties.  The /dev/full device on GNU/Linux
      can be used for testing whether writes are checked properly.  For
-     instance, hello >/dev/null should exit unsuccessfully.  On exit,
+     instance, hello >/dev/full should exit unsuccessfully.  On exit,
      if any writes failed, change the exit status.  This is
      implemented in the Gnulib module "closeout".  */
   atexit (close_stdout);
@@ -186,7 +186,8 @@ print_version (void)
      year comes around.  */
   printf (_("\
 Copyright (C) %s Free Software Foundation, Inc.\n\
-License: GNU GPL v2+ <http://www.gnu.org/licenses/gpl.html>\n\
-This is free software.  There is NO WARRANTY, to the extent permitted by law.\n"),
-              "2006");
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law.\n"),
+              "2007");
 }

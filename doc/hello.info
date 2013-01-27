@@ -1,9 +1,7 @@
-This is hello.info, produced by makeinfo version 4.8.90 from hello.texi.
+This manual is for GNU Hello (version 2.3, 26 June 2007), which prints
+a friendly greeting (and serves as an example GNU package).
 
-   This manual is for GNU Hello (version 2.2, 23 November 2006), which
-prints a friendly greeting (and serves as an example GNU package).
-
-   Copyright (C) 1992, 1993, 1996, 2002, 2005, 2006 Free Software
+   Copyright (C) 1992, 1993, 1996, 2002, 2005, 2006, 2007 Free Software
 Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
@@ -14,12 +12,14 @@ Foundation, Inc.
      below.  A copy of the license is included in the section entitled
      "GNU Free Documentation License."
 
-     (a) The FSF's Back-Cover Text is: "You have freedom to copy and
-     modify this GNU Manual, like GNU software.  Copies published by
-     the Free Software Foundation raise funds for GNU development."
+     (a) The FSF's Back-Cover Text is: "You are free to copy and modify
+     this GNU Manual. Buying copies from GNU Press supports the FSF in
+     developing GNU and promoting software freedom."
 
 INFO-DIR-SECTION Basics
 START-INFO-DIR-ENTRY
+This is hello.info, produced by makeinfo version 4.8.90 from hello.texi.
+
 * Hello: (hello).               Hello, GNU world.
 END-INFO-DIR-ENTRY
 
@@ -29,7 +29,7 @@ File: hello.info,  Node: Top,  Next: Overview,  Up: (dir)
 GNU Hello
 *********
 
-This manual is for GNU Hello (version 2.2, 23 November 2006).
+This manual is for GNU Hello (version 2.3, 26 June 2007).
 
 * Menu:
 
@@ -709,13 +709,13 @@ Concept index
 
 
 Tag Table:
-Node: Top1073
-Node: Overview1525
-Node: Sample output4129
-Node: Invoking hello4529
-Node: Reporting bugs5677
-Node: Copying this manual6944
-Node: GNU Free Documentation License7189
-Node: Concept index29598
+Node: Top1062
+Node: Overview1510
+Node: Sample output4114
+Node: Invoking hello4514
+Node: Reporting bugs5662
+Node: Copying this manual6929
+Node: GNU Free Documentation License7174
+Node: Concept index29583
 
 End Tag Table

@@ -4,7 +4,7 @@
    language is requested. */
 #undef ENABLE_NLS
 
-/* Define to 1 when using the gnulib close-stream module. */
+/* Define to 1 when using the gnulib module close-stream. */
 #undef GNULIB_CLOSE_STREAM
 
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
@@ -40,8 +40,11 @@
 /* Define if the GNU gettext() function is already present or preinstalled. */
 #undef HAVE_GETTEXT
 
-/* Define if you have the iconv() function. */
+/* Define if you have the iconv() function and it works. */
 #undef HAVE_ICONV
+
+/* Define if your compiler supports the #include_next directive. */
+#undef HAVE_INCLUDE_NEXT
 
 /* Define to 1 if the compiler supports one of the keywords 'inline',
    '__inline__', '__inline' and effectively inlines functions marked as such.
@@ -51,8 +54,8 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `iswprint' function. */
-#undef HAVE_ISWPRINT
+/* Define to 1 if you have the `iswcntrl' function. */
+#undef HAVE_ISWCNTRL
 
 /* Define to 1 if mbrtowc and mbstate_t are properly declared. */
 #undef HAVE_MBRTOWC
@@ -101,6 +104,9 @@
 
 /* Define to 1 if you have the <wctype.h> header file. */
 #undef HAVE_WCTYPE_H
+
+/* Define if you have the 'wint_t' type. */
+#undef HAVE_WINT_T
 
 /* Define to 1 if the system has the type `_Bool'. */
 #undef HAVE__BOOL

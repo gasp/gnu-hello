@@ -14,6 +14,26 @@
 
 @SET_MAKE@
 
+# Process this file with automake to produce Makefile.in.
+# Makefile.am for hello/src.
+#
+# Copyright (C) 1996, 1997, 2001, 2005, 2006, 2007 Free Software
+# Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -43,20 +63,26 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib/m4/close-stream.m4 \
 	$(top_srcdir)/gnulib/m4/fpending.m4 \
 	$(top_srcdir)/gnulib/m4/getopt.m4 \
 	$(top_srcdir)/gnulib/m4/gettext.m4 \
+	$(top_srcdir)/gnulib/m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib/m4/gnulib-comp.m4 \
 	$(top_srcdir)/gnulib/m4/iconv.m4 \
+	$(top_srcdir)/gnulib/m4/include_next.m4 \
 	$(top_srcdir)/gnulib/m4/inline.m4 \
+	$(top_srcdir)/gnulib/m4/intlmacosx.m4 \
 	$(top_srcdir)/gnulib/m4/lib-ld.m4 \
 	$(top_srcdir)/gnulib/m4/lib-link.m4 \
 	$(top_srcdir)/gnulib/m4/lib-prefix.m4 \
-	$(top_srcdir)/gnulib/m4/lock.m4 \
 	$(top_srcdir)/gnulib/m4/mbrtowc.m4 \
 	$(top_srcdir)/gnulib/m4/mbstate_t.m4 \
 	$(top_srcdir)/gnulib/m4/nls.m4 $(top_srcdir)/gnulib/m4/po.m4 \
 	$(top_srcdir)/gnulib/m4/progtest.m4 \
 	$(top_srcdir)/gnulib/m4/quotearg.m4 \
 	$(top_srcdir)/gnulib/m4/stdbool.m4 \
+	$(top_srcdir)/gnulib/m4/stdlib_h.m4 \
 	$(top_srcdir)/gnulib/m4/unistd_h.m4 \
+	$(top_srcdir)/gnulib/m4/wchar.m4 \
+	$(top_srcdir)/gnulib/m4/wctype.m4 \
+	$(top_srcdir)/gnulib/m4/wint_t.m4 \
 	$(top_srcdir)/gnulib/m4/xalloc.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -103,9 +129,35 @@ EXEEXT = @EXEEXT@
 GETOPT_H = @GETOPT_H@
 GMSGFMT = @GMSGFMT@
 GMSGFMT_015 = @GMSGFMT_015@
+GNULIB_CHOWN = @GNULIB_CHOWN@
+GNULIB_DUP2 = @GNULIB_DUP2@
+GNULIB_FCHDIR = @GNULIB_FCHDIR@
+GNULIB_FTRUNCATE = @GNULIB_FTRUNCATE@
+GNULIB_GETCWD = @GNULIB_GETCWD@
+GNULIB_GETLOGIN_R = @GNULIB_GETLOGIN_R@
+GNULIB_GETSUBOPT = @GNULIB_GETSUBOPT@
+GNULIB_LCHOWN = @GNULIB_LCHOWN@
+GNULIB_LSEEK = @GNULIB_LSEEK@
+GNULIB_MKDTEMP = @GNULIB_MKDTEMP@
+GNULIB_MKSTEMP = @GNULIB_MKSTEMP@
+GNULIB_READLINK = @GNULIB_READLINK@
+GNULIB_SLEEP = @GNULIB_SLEEP@
 GREP = @GREP@
+HAVE_DECL_GETLOGIN_R = @HAVE_DECL_GETLOGIN_R@
+HAVE_DUP2 = @HAVE_DUP2@
+HAVE_FTRUNCATE = @HAVE_FTRUNCATE@
+HAVE_GETSUBOPT = @HAVE_GETSUBOPT@
+HAVE_ISWCNTRL = @HAVE_ISWCNTRL@
+HAVE_MKDTEMP = @HAVE_MKDTEMP@
+HAVE_READLINK = @HAVE_READLINK@
+HAVE_SLEEP = @HAVE_SLEEP@
+HAVE_UNISTD_H = @HAVE_UNISTD_H@
+HAVE_WCHAR_H = @HAVE_WCHAR_H@
+HAVE_WCTYPE_H = @HAVE_WCTYPE_H@
+HAVE_WINT_T = @HAVE_WINT_T@
 HAVE__BOOL = @HAVE__BOOL@
 HELP2MAN = @HELP2MAN@
+INCLUDE_NEXT = @INCLUDE_NEXT@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -128,6 +180,10 @@ MKDIR_P = @MKDIR_P@
 MSGFMT = @MSGFMT@
 MSGFMT_015 = @MSGFMT_015@
 MSGMERGE = @MSGMERGE@
+NEXT_STDLIB_H = @NEXT_STDLIB_H@
+NEXT_UNISTD_H = @NEXT_UNISTD_H@
+NEXT_WCHAR_H = @NEXT_WCHAR_H@
+NEXT_WCTYPE_H = @NEXT_WCTYPE_H@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -138,13 +194,20 @@ PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 POSUB = @POSUB@
 RANLIB = @RANLIB@
+REPLACE_CHOWN = @REPLACE_CHOWN@
+REPLACE_FCHDIR = @REPLACE_FCHDIR@
+REPLACE_GETCWD = @REPLACE_GETCWD@
+REPLACE_LCHOWN = @REPLACE_LCHOWN@
+REPLACE_LSEEK = @REPLACE_LSEEK@
+REPLACE_MKSTEMP = @REPLACE_MKSTEMP@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STDBOOL_H = @STDBOOL_H@
 STRIP = @STRIP@
-UNISTD_H = @UNISTD_H@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
+WCHAR_H = @WCHAR_H@
+WCTYPE_H = @WCTYPE_H@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 abs_builddir = @abs_builddir@
